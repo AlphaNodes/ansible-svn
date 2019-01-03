@@ -1,0 +1,78 @@
+- name: Ensure SVN packages are installed
+  package:
+    name: '{{ svn_server_packages }}'
+    state: present
+
+- name: SVN group exists
+  group:
+    name: '{{ svn_server_group }}'
+    state: present
+    system: yes
+
+- name: SVN user exists
+  user:
+    name: '{{ svn_server_user }}'
+    group: '{{ svn_server_group }}'
+    groups: adm
+    home: '{{ svn_server_home }}'
+    shell: /bin/bash
+    state: present
+    system: yes
+
+- name: Ensure directory for repositories exists
+  file:
+    path: '{{ svn_server_repositories }}'
+    owner: '{{ svn_server_user }}'
+    group: '{{ svn_server_group }}'
+    state: directory
+
+- name: Ensure log directory exists
+  file:
+    path: '{{ svn_server_log_dir }}'
+    owner: '{{ svn_server_user }}'
+    group: adm
+    state: directory
+
+- name: Install logrotate configuration
+  template:
+    src: logrotate.d/svnserve.j2
+    dest: /etc/logrotate.d/svnserve
+
+- name: Install environment configuration
+  template:
+    src: default/svnserve.j2
+    dest: /etc/default/svnserve
+
+- name: Get stat of svnserve.service
+  stat:
+    path: '{{ svn_server_systemd_service_file }}'
+  register: sym
+
+- name: Delete symlink, if exists
+  file:
+    path: '{{ svn_server_systemd_service_file }}'
+    state: absent
+  when: sym.stat.islnk is defined and sym.stat.islnk
+
+- name: Setup systemd unit configuration
+  template:
+    src: svnserve.service.j2
+    dest: '{{ svn_server_systemd_service_file }}'
+    owner: root
+    group: root
+    mode: 0644
+  register: systemd
+
+# Workaround for bug https://github.com/ansible/ansible-modules-core/issues/915.
+- name: Run systemd daemon_reload.
+  systemd:
+    name: svnserve
+    daemon_reload: yes
+  when: systemd.changed
+  tags: ['skip_ansible_lint']
+
+- name: Ensure SVN is started
+  service:
+    name: svnserve
+    state: started
+    enabled: yes

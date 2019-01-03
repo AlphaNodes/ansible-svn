@@ -1,0 +1,32 @@
+- name: Stop svnserve, if started
+  service:
+    name: svnserve
+    state: stopped
+    enabled: no
+
+- name: Remove SVN configuration
+  file:
+    path: '{{ item }}'
+    state: absent
+  loop:
+    - '{{ svn_server_systemd_service_file }}'
+    - '{{ svn_server_log_dir }}'
+    - /etc/default/svnserve
+    - /etc/logrotate.d/svnserve
+
+- name: Remove SVN user
+  user:
+    name: '{{ svn_server_user }}'
+    state: absent
+    remove: yes
+
+- name: Remove SVN group
+  user:
+    name: '{{ svn_server_group }}'
+    state: absent
+
+- name: Ensure SVN packages are removed
+  package:
+    name: '{{ svn_server_packages }}'
+    state: absent
+  when: svn_server_remove_packages
