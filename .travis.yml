@@ -19,8 +19,8 @@ script:
   # Run tests.
   - ${PWD}/tests/test.sh
 
-  # Check if psql is available.
-  - 'docker exec --tty ${container_id} env TERM=xterm psql --help'
+  # Check if svn is available.
+  - 'docker exec --tty ${container_id} env TERM=xterm svn --help'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
