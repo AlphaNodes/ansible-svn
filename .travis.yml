@@ -2,9 +2,7 @@
 services: docker
 
 env:
-  - distro: debian8
   - distro: debian9
-  - distro: ubuntu1604
   - distro: ubuntu1804
 
 script:
@@ -20,7 +18,7 @@ script:
   - ${PWD}/tests/test.sh
 
   # Check if svn is available.
-  - 'docker exec --tty ${container_id} env TERM=xterm svn --help'
+  - 'docker exec --tty ${container_id} env TERM=xterm svn --version'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
