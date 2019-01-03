@@ -1,5 +1,5 @@
 - name: Ensure SVN packages are installed
-  package:
+  apt:
     name: '{{ svn_server_packages }}'
     state: present
 
