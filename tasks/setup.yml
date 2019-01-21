@@ -19,6 +19,13 @@
     state: present
     system: yes
 
+- name: Configure SVN ssh keys (if provided)
+  authorized_key:
+    user: '{{ svn_server_user }}'
+    key: "{{ lookup('file', 'ssh/svn/' + item + '.pub') }}"
+    state: present
+  loop: '{{ svn_server_ssh_keys | default([]) }}'
+
 - name: Ensure directory for repositories exists
   file:
     path: '{{ svn_server_repositories }}'
