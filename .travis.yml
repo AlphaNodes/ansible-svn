@@ -1,5 +1,6 @@
 ---
 services: docker
+language: ruby
 
 env:
   - distro: debian9
@@ -19,6 +20,11 @@ script:
 
   # Check if svn is available.
   - 'docker exec --tty ${container_id} env TERM=xterm svn --version'
+
+after_failure:
+  # Check what happened on systemd systems.
+  - 'docker exec --tty ${container_id} env TERM=xterm systemctl -l status svnserve.service'
+  - 'docker exec --tty ${container_id} env TERM=xterm journalctl -xe --no-pager'
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
