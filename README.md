@@ -2,7 +2,7 @@
 
 Run svnserve on Debian and Ubuntu servers.
 
-[![Build Status](https://travis-ci.org/AlphaNodes/ansible-svn-server.svg?branch=master)](https://travis-ci.org/AlphaNodes/ansible-svn-server)
+[![Build Status](https://travis-ci.org/AlphaNodes/ansible-svn.svg?branch=master)](https://travis-ci.org/AlphaNodes/ansible-svn)
 
 ## Dependencies
 
@@ -12,7 +12,7 @@ Run svnserve on Debian and Ubuntu servers.
 
     - hosts: localhost
       roles:
-        - AlphaNodes.svn-server
+        - AlphaNodes.svn
 
 ## License
 
