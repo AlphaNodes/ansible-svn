@@ -49,7 +49,7 @@ svn_server_home: /srv/svn
 Home directory of `svn_server_user`.
 
 ```
-svn_server_repositories: '/srv/svn/repositories'
+svn_server_repositories: /srv/svn/repositories
 ```
 
 Directory for repositories (this should be within `svn_server_home` directory). In this directory all
