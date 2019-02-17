@@ -52,7 +52,7 @@ Home directory of `svn_server_user`.
 svn_server_repositories: '/srv/svn/repositories'
 ```
 
-Directory for repositories (this should be within svn_server_home directory). In this directory all
+Directory for repositories (this should be within `svn_server_home` directory). In this directory all
 repositories will be stored. Make sure you have enough disk space on used partition.
 
 ```
