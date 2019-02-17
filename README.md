@@ -23,37 +23,53 @@ ansible-galaxy install alphanodes.svn
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-  svn_server_packages:
-    - subversion
+```
+svn_server_packages:
+  - subversion
+```
 
 Debian packages, which should be installed.
 
-  svn_server_user: svn
+```
+svn_server_user: svn
+```
 
 svn-serve will be run under the `svn_server_user`.
 
-  svn_server_group: svn
+```
+svn_server_group: svn
+```
 
 User group of `svn_server_user`.
 
-  svn_server_home: /srv/svn
+```
+svn_server_home: /srv/svn
+```
 
 Home directory of `svn_server_user`.
 
-  svn_server_repositories: '{{ svn_server_home }}/repositories'
+```
+svn_server_repositories: '{{ svn_server_home }}/repositories'
+```
 
 Directory for repositories (this should be within svn_server_home directory). In this directory all
 repositories will be stored. Make sure you have enough disk space on used partition.
 
-  svn_server_user_password:
+```
+svn_server_user_password:
+```
 
 If you want to login with `svn_server_user` you can set a password.
 
-  svn_server_remove: no
+```
+svn_server_remove: no
+```
 
 To uninstall svnserve with all data, set `svn_server_remove` to yes.
 
-  svn_server_remove_packages: no
+```
+svn_server_remove_packages: no
+```
 
 If you want to remove debian packages with  `svn_server_remove`, set `svn_server_remove_packages` to yes.
 
