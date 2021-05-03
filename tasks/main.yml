@@ -1,9 +1,11 @@
 - name: Include setup tasks
   import_tasks: setup.yml
-  tags: svn
+  tags:
+    - svn
   when: not svn_server_remove
 
 - name: Include remove tasks
   import_tasks: remove.yml
-  tags: svn
+  tags:
+    - svn
   when: svn_server_remove
